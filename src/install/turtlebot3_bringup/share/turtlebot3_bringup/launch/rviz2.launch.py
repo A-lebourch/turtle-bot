@@ -1,1 +1,0 @@
-/home/user/turtle-bot/src/turtlebot3/turtlebot3_bringup/launch/rviz2.launch.py
