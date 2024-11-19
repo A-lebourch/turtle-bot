@@ -1,0 +1,23 @@
+running egg_info
+writing ../../build/follow_me/follow_me.egg-info/PKG-INFO
+writing dependency_links to ../../build/follow_me/follow_me.egg-info/dependency_links.txt
+writing entry points to ../../build/follow_me/follow_me.egg-info/entry_points.txt
+writing requirements to ../../build/follow_me/follow_me.egg-info/requires.txt
+writing top-level names to ../../build/follow_me/follow_me.egg-info/top_level.txt
+reading manifest file '../../build/follow_me/follow_me.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file '../../build/follow_me/follow_me.egg-info/SOURCES.txt'
+running build
+running build_py
+copying follow_me/follow_me.py -> /home/user/turtlebot3_ws/build/follow_me/build/lib/follow_me
+running install
+running install_lib
+copying /home/user/turtlebot3_ws/build/follow_me/build/lib/follow_me/follow_me.py -> /home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages/follow_me
+byte-compiling /home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages/follow_me/follow_me.py to follow_me.cpython-310.pyc
+running install_data
+running install_egg_info
+removing '/home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages/follow_me-0.0.0-py3.10.egg-info' (and everything under it)
+Copying ../../build/follow_me/follow_me.egg-info to /home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages/follow_me-0.0.0-py3.10.egg-info
+running install_scripts
+Installing follow_me script to /home/user/turtlebot3_ws/install/follow_me/lib/follow_me
+writing list of installed files to '/home/user/turtlebot3_ws/build/follow_me/install.log'

@@ -1,0 +1,19 @@
+[1.049s] Invoking command in '/home/user/turtlebot3_ws/build/follow_me': PYTHONPATH=/home/user/turtlebot3_ws/build/follow_me/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py develop --editable --build-directory /home/user/turtlebot3_ws/build/follow_me/build --no-deps symlink_data
+[1.280s] running develop
+[1.281s] /usr/lib/python3/dist-packages/setuptools/command/easy_install.py:158: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.
+[1.281s]   warnings.warn(
+[1.396s] running egg_info
+[1.396s] writing follow_me.egg-info/PKG-INFO
+[1.396s] writing dependency_links to follow_me.egg-info/dependency_links.txt
+[1.396s] writing entry points to follow_me.egg-info/entry_points.txt
+[1.396s] writing requirements to follow_me.egg-info/requires.txt
+[1.397s] writing top-level names to follow_me.egg-info/top_level.txt
+[1.397s] reading manifest file 'follow_me.egg-info/SOURCES.txt'
+[1.398s] writing manifest file 'follow_me.egg-info/SOURCES.txt'
+[1.400s] running build_ext
+[1.400s] Creating /home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages/follow-me.egg-link (link to .)
+[1.400s] Installing follow_me script to /home/user/turtlebot3_ws/install/follow_me/lib/follow_me
+[1.401s] 
+[1.401s] Installed /home/user/turtlebot3_ws/build/follow_me
+[1.401s] running symlink_data
+[1.431s] Invoked command in '/home/user/turtlebot3_ws/build/follow_me' returned '0': PYTHONPATH=/home/user/turtlebot3_ws/build/follow_me/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py develop --editable --build-directory /home/user/turtlebot3_ws/build/follow_me/build --no-deps symlink_data

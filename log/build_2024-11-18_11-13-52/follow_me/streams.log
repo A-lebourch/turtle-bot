@@ -1,0 +1,25 @@
+[0.559s] Invoking command in '/home/user/turtlebot3_ws/src/follow_me': PYTHONPATH=/home/user/turtlebot3_ws/build/follow_me/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/follow_me build --build-base /home/user/turtlebot3_ws/build/follow_me/build install --record /home/user/turtlebot3_ws/build/follow_me/install.log --single-version-externally-managed install_data
+[0.736s] running egg_info
+[0.737s] writing ../../build/follow_me/follow_me.egg-info/PKG-INFO
+[0.737s] writing dependency_links to ../../build/follow_me/follow_me.egg-info/dependency_links.txt
+[0.737s] writing entry points to ../../build/follow_me/follow_me.egg-info/entry_points.txt
+[0.737s] writing requirements to ../../build/follow_me/follow_me.egg-info/requires.txt
+[0.737s] writing top-level names to ../../build/follow_me/follow_me.egg-info/top_level.txt
+[0.739s] reading manifest file '../../build/follow_me/follow_me.egg-info/SOURCES.txt'
+[0.740s] adding license file 'LICENSE'
+[0.741s] writing manifest file '../../build/follow_me/follow_me.egg-info/SOURCES.txt'
+[0.741s] running build
+[0.741s] running build_py
+[0.742s] copying follow_me/follow_me.py -> /home/user/turtlebot3_ws/build/follow_me/build/lib/follow_me
+[0.742s] running install
+[0.742s] running install_lib
+[0.744s] copying /home/user/turtlebot3_ws/build/follow_me/build/lib/follow_me/follow_me.py -> /home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages/follow_me
+[0.744s] byte-compiling /home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages/follow_me/follow_me.py to follow_me.cpython-310.pyc
+[0.745s] running install_data
+[0.746s] running install_egg_info
+[0.747s] removing '/home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages/follow_me-0.0.0-py3.10.egg-info' (and everything under it)
+[0.747s] Copying ../../build/follow_me/follow_me.egg-info to /home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages/follow_me-0.0.0-py3.10.egg-info
+[0.747s] running install_scripts
+[0.765s] Installing follow_me script to /home/user/turtlebot3_ws/install/follow_me/lib/follow_me
+[0.765s] writing list of installed files to '/home/user/turtlebot3_ws/build/follow_me/install.log'
+[0.786s] Invoked command in '/home/user/turtlebot3_ws/src/follow_me' returned '0': PYTHONPATH=/home/user/turtlebot3_ws/build/follow_me/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/follow_me build --build-base /home/user/turtlebot3_ws/build/follow_me/build install --record /home/user/turtlebot3_ws/build/follow_me/install.log --single-version-externally-managed install_data

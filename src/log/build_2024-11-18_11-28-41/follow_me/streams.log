@@ -1,0 +1,26 @@
+[1.074s] Invoking command in '/home/user/turtlebot3_ws/src/build/follow_me': PYTHONPATH=/home/user/turtlebot3_ws/src/build/follow_me/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/user/turtlebot3_ws/src/install/follow_me/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py develop --editable --build-directory /home/user/turtlebot3_ws/src/build/follow_me/build --no-deps symlink_data
+[1.660s] running develop
+[1.660s] /usr/lib/python3/dist-packages/setuptools/command/easy_install.py:158: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.
+[1.661s]   warnings.warn(
+[2.028s] running egg_info
+[2.029s] creating follow_me.egg-info
+[2.047s] writing follow_me.egg-info/PKG-INFO
+[2.048s] writing dependency_links to follow_me.egg-info/dependency_links.txt
+[2.048s] writing entry points to follow_me.egg-info/entry_points.txt
+[2.048s] writing requirements to follow_me.egg-info/requires.txt
+[2.049s] writing top-level names to follow_me.egg-info/top_level.txt
+[2.049s] writing manifest file 'follow_me.egg-info/SOURCES.txt'
+[2.050s] reading manifest file 'follow_me.egg-info/SOURCES.txt'
+[2.051s] writing manifest file 'follow_me.egg-info/SOURCES.txt'
+[2.052s] running build_ext
+[2.052s] Creating /home/user/turtlebot3_ws/src/install/follow_me/lib/python3.10/site-packages/follow-me.egg-link (link to .)
+[2.053s] Installing follow_me script to /home/user/turtlebot3_ws/src/install/follow_me/lib/follow_me
+[2.053s] 
+[2.053s] Installed /home/user/turtlebot3_ws/src/build/follow_me
+[2.053s] running symlink_data
+[2.053s] creating /home/user/turtlebot3_ws/src/install/follow_me/share/ament_index
+[2.053s] creating /home/user/turtlebot3_ws/src/install/follow_me/share/ament_index/resource_index
+[2.054s] creating /home/user/turtlebot3_ws/src/install/follow_me/share/ament_index/resource_index/packages
+[2.054s] symbolically linking /home/user/turtlebot3_ws/src/build/follow_me/resource/follow_me -> /home/user/turtlebot3_ws/src/install/follow_me/share/ament_index/resource_index/packages
+[2.054s] symbolically linking /home/user/turtlebot3_ws/src/build/follow_me/package.xml -> /home/user/turtlebot3_ws/src/install/follow_me/share/follow_me
+[2.100s] Invoked command in '/home/user/turtlebot3_ws/src/build/follow_me' returned '0': PYTHONPATH=/home/user/turtlebot3_ws/src/build/follow_me/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/user/turtlebot3_ws/src/install/follow_me/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py develop --editable --build-directory /home/user/turtlebot3_ws/src/build/follow_me/build --no-deps symlink_data

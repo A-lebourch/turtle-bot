@@ -1,0 +1,36 @@
+[1.719s] Invoking command in '/home/user/turtlebot3_ws/build/follow_me': PYTHONPATH=/home/user/turtlebot3_ws/build/follow_me/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py develop --uninstall --editable --build-directory /home/user/turtlebot3_ws/build/follow_me/build
+[2.040s] running develop
+[2.040s] /usr/lib/python3/dist-packages/setuptools/command/easy_install.py:158: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.
+[2.040s]   warnings.warn(
+[2.228s] Removing /home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages/follow-me.egg-link (link to .)
+[2.262s] Invoked command in '/home/user/turtlebot3_ws/build/follow_me' returned '0': PYTHONPATH=/home/user/turtlebot3_ws/build/follow_me/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py develop --uninstall --editable --build-directory /home/user/turtlebot3_ws/build/follow_me/build
+[2.265s] Invoking command in '/home/user/turtlebot3_ws/src/follow_me': PYTHONPATH=/home/user/turtlebot3_ws/build/follow_me/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/follow_me build --build-base /home/user/turtlebot3_ws/build/follow_me/build install --record /home/user/turtlebot3_ws/build/follow_me/install.log --single-version-externally-managed install_data --force
+[2.627s] running egg_info
+[2.628s] writing ../../build/follow_me/follow_me.egg-info/PKG-INFO
+[2.628s] writing dependency_links to ../../build/follow_me/follow_me.egg-info/dependency_links.txt
+[2.629s] writing entry points to ../../build/follow_me/follow_me.egg-info/entry_points.txt
+[2.629s] writing requirements to ../../build/follow_me/follow_me.egg-info/requires.txt
+[2.629s] writing top-level names to ../../build/follow_me/follow_me.egg-info/top_level.txt
+[2.633s] reading manifest file '../../build/follow_me/follow_me.egg-info/SOURCES.txt'
+[2.635s] adding license file 'LICENSE'
+[2.635s] writing manifest file '../../build/follow_me/follow_me.egg-info/SOURCES.txt'
+[2.635s] running build
+[2.635s] running build_py
+[2.637s] copying follow_me/follow_me.py -> /home/user/turtlebot3_ws/build/follow_me/build/lib/follow_me
+[2.638s] copying follow_me/__init__.py -> /home/user/turtlebot3_ws/build/follow_me/build/lib/follow_me
+[2.638s] running install
+[2.639s] running install_lib
+[2.640s] creating /home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages/follow_me
+[2.640s] copying /home/user/turtlebot3_ws/build/follow_me/build/lib/follow_me/follow_me.py -> /home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages/follow_me
+[2.641s] copying /home/user/turtlebot3_ws/build/follow_me/build/lib/follow_me/__init__.py -> /home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages/follow_me
+[2.642s] byte-compiling /home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages/follow_me/follow_me.py to follow_me.cpython-310.pyc
+[2.643s] byte-compiling /home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages/follow_me/__init__.py to __init__.cpython-310.pyc
+[2.643s] running install_data
+[2.644s] copying resource/follow_me -> /home/user/turtlebot3_ws/install/follow_me/share/ament_index/resource_index/packages
+[2.644s] copying package.xml -> /home/user/turtlebot3_ws/install/follow_me/share/follow_me
+[2.644s] running install_egg_info
+[2.649s] Copying ../../build/follow_me/follow_me.egg-info to /home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages/follow_me-0.0.0-py3.10.egg-info
+[2.652s] running install_scripts
+[2.696s] Installing follow_me script to /home/user/turtlebot3_ws/install/follow_me/lib/follow_me
+[2.696s] writing list of installed files to '/home/user/turtlebot3_ws/build/follow_me/install.log'
+[2.733s] Invoked command in '/home/user/turtlebot3_ws/src/follow_me' returned '0': PYTHONPATH=/home/user/turtlebot3_ws/build/follow_me/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/user/turtlebot3_ws/install/follow_me/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/follow_me build --build-base /home/user/turtlebot3_ws/build/follow_me/build install --record /home/user/turtlebot3_ws/build/follow_me/install.log --single-version-externally-managed install_data --force

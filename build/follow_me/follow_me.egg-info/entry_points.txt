@@ -1,0 +1,3 @@
+[console_scripts]
+follow_me = follow_me.follow_me:main
+
