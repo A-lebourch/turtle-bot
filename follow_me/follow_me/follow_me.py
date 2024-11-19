@@ -115,16 +115,6 @@ class MinimalSubscriber(Node):
         twist.angular.y = 0.0
         twist.angular.z = delta_y *k_ang
 
-        # if target[1] > 00:
-        #     twist.angular.z = 0.1
-
-        # if target[1] > -0.05:
-        #     twist.angular.z = -0.1
-        
-        # else:
-        #     twist.angular.z = 0.0
-
-
         self.pub.publish(twist)
 
 def main(args=None):
