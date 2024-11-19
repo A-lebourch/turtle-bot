@@ -1,38 +1,38 @@
-#!/usr/bin/env python
-#
-# Copyright (c) 2011, Willow Garage, Inc.
-# All rights reserved.
-#
-# Software License Agreement (BSD License 2.0)
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-#  * Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-#  * Redistributions in binary form must reproduce the above
-#    copyright notice, this list of conditions and the following
-#    disclaimer in the documentation and/or other materials provided
-#    with the distribution.
-#  * Neither the name of {copyright_holder} nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-# FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
-# COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-# BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
-# ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-# POSSIBILITY OF SUCH DAMAGE.
-#
-# Author: Darby Lim
+# #!/usr/bin/env python
+# #
+# # Copyright (c) 2011, Willow Garage, Inc.
+# # All rights reserved.
+# #
+# # Software License Agreement (BSD License 2.0)
+# #
+# # Redistribution and use in source and binary forms, with or without
+# # modification, are permitted provided that the following conditions
+# # are met:
+# #
+# #  * Redistributions of source code must retain the above copyright
+# #    notice, this list of conditions and the following disclaimer.
+# #  * Redistributions in binary form must reproduce the above
+# #    copyright notice, this list of conditions and the following
+# #    disclaimer in the documentation and/or other materials provided
+# #    with the distribution.
+# #  * Neither the name of {copyright_holder} nor the names of its
+# #    contributors may be used to endorse or promote products derived
+# #    from this software without specific prior written permission.
+# #
+# # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# # "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# # LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+# # FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+# # COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+# # INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+# # BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# # LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+# # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+# # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# # POSSIBILITY OF SUCH DAMAGE.
+# #
+# # Author: Darby Lim
 
 import os
 import select
@@ -43,131 +43,103 @@ from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
 from rclpy.qos import QoSProfile
 
-if os.name == 'nt':
-    import msvcrt
-else:
-    import termios
-    import tty
-
-BURGER_MAX_LIN_VEL = 0.22
-BURGER_MAX_ANG_VEL = 2.84
-
-WAFFLE_MAX_LIN_VEL = 0.26
-WAFFLE_MAX_ANG_VEL = 1.82
-
-LIN_VEL_STEP_SIZE = 0.01
-ANG_VEL_STEP_SIZE = 0.1
-
-TURTLEBOT3_MODEL = os.environ['TURTLEBOT3_MODEL']
-
-msg = """
-Control Your TurtleBot3!
----------------------------
-Moving around:
-        w
-   a    s    d
-        x
-
-w/x : increase/decrease linear velocity (Burger : ~ 0.22, Waffle and Waffle Pi : ~ 0.26)
-a/d : increase/decrease angular velocity (Burger : ~ 2.84, Waffle and Waffle Pi : ~ 1.82)
-
-space key, s : force stop
-
-CTRL-C to quit
-"""
-
-e = """
-Communications Failed
-"""
 
 
-def get_key(settings):
-    if os.name == 'nt':
-        return msvcrt.getch().decode('utf-8')
-    tty.setraw(sys.stdin.fileno())
-    rlist, _, _ = select.select([sys.stdin], [], [], 0.1)
-    if rlist:
-        key = sys.stdin.read(1)
-    else:
-        key = ''
-
-    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
-    return key
+import rclpy
+from rclpy.node import Node
+import time
+import math
+from sensor_msgs.msg import LaserScan
 
 
-def print_vels(target_linear_velocity, target_angular_velocity):
-    print('currently:\tlinear velocity {0}\t angular velocity {1} '.format(
-        target_linear_velocity,
-        target_angular_velocity))
+class MinimalSubscriber(Node):
 
+    def __init__(self):
+        super().__init__('minimal_subscriber')
+        qos = QoSProfile(depth=10)
+        self.subscription = self.create_subscription(
+            LaserScan,
+            'scan',
+            self.listener_callback,
+            10)
+        self.subscription  # prevent unused variable warning
+        self.pub = self.create_publisher(Twist, 'cmd_vel', qos)
 
-def make_simple_profile(output, input, slop):
-    if input > output:
-        output = min(input, output + slop)
-    elif input < output:
-        output = max(input, output - slop)
-    else:
-        output = input
+    def listener_callback(self, msg):
+        # self.get_logger().info("ranges")
+        target = []
+        x_list = []
+        y_list = []
+        borne_max = 2
+        borne_min = 0.5
+        laser_range = []
+        ouverture = 20
+        for t in range(ouverture):
+            laser_range.append(msg._ranges[ouverture - t])
+        for t in range(ouverture):
+            laser_range.append(msg._ranges[-t])
+        
+        angle = -ouverture
+        x_centre = (borne_max + borne_min) /2
+        y_centre = 0.0
+        for data in laser_range:
+            if data > borne_min and data < borne_max:
+                x = data * math.cos(math.radians(angle))
+                y = data * math.sin(math.radians(angle))
+                target.append([x, y])
+                x_list.append(x)
+                y_list.append(y)
+                # print(data)
+            angle += 1
+        if x_list != [] and y_list != []:
+            avg = [sum(x_list) / len(x_list), sum(y_list) / len(y_list)]
+            print(avg)
+        else: 
+            avg = [x_centre, y_centre]
 
-    return output
+        delta_x = avg[0] - x_centre
+        delta_y = y_centre - avg[1]
 
+        self.move(delta_x, delta_y)
 
-def constrain(input_vel, low_bound, high_bound):
-    if input_vel < low_bound:
-        input_vel = low_bound
-    elif input_vel > high_bound:
-        input_vel = high_bound
-    else:
-        input_vel = input_vel
-
-    return input_vel
-
-
-def check_linear_limit_velocity(velocity):
-    if TURTLEBOT3_MODEL == 'burger':
-        return constrain(velocity, -BURGER_MAX_LIN_VEL, BURGER_MAX_LIN_VEL)
-    else:
-        return constrain(velocity, -WAFFLE_MAX_LIN_VEL, WAFFLE_MAX_LIN_VEL)
-
-
-def check_angular_limit_velocity(velocity):
-    if TURTLEBOT3_MODEL == 'burger':
-        return constrain(velocity, -BURGER_MAX_ANG_VEL, BURGER_MAX_ANG_VEL)
-    else:
-        return constrain(velocity, -WAFFLE_MAX_ANG_VEL, WAFFLE_MAX_ANG_VEL)
-
-
-def main():
-    settings = None
-    if os.name != 'nt':
-        settings = termios.tcgetattr(sys.stdin)
-
-    rclpy.init()
-
-    qos = QoSProfile(depth=10)
-    node = rclpy.create_node('teleop_keyboard')
-    pub = node.create_publisher(Twist, 'cmd_vel', qos)
-    toto = node.create_subscription(LaserScan, 'scan', qos_profile=qos, callback=lidar_callback)
-
-    while True:
-
+    def move(self, delta_x, delta_y):
         twist = Twist()
-
-        twist.linear.x = 0.0
+        k_lin = 0.5
+        k_ang = 3.0
+        twist.linear.x = delta_x * k_lin
         twist.linear.y = 0.0
         twist.linear.z = 0.0
 
 
         twist.angular.x = 0.0
         twist.angular.y = 0.0
-        twist.angular.z = 0.0
+        twist.angular.z = delta_y *k_ang
 
-        pub.publish(twist)
+        # if target[1] > 00:
+        #     twist.angular.z = 0.1
 
-def lidar_callback(msg):
-    (msg)
+        # if target[1] > -0.05:
+        #     twist.angular.z = -0.1
+        
+        # else:
+        #     twist.angular.z = 0.0
+
+
+        self.pub.publish(twist)
+
+def main(args=None):
+    rclpy.init(args=args)
+
+    minimal_subscriber = MinimalSubscriber()
+
+    rclpy.spin(minimal_subscriber)
+
+    # Destroy the node explicitly
+    # (optional - otherwise it will be done automatically
+    # when the garbage collector destroys the node object)
+    minimal_subscriber.destroy_node()
+    rclpy.shutdown()
 
 
 if __name__ == '__main__':
-
     main()
