@@ -1,39 +1,3 @@
-# #!/usr/bin/env python
-# #
-# # Copyright (c) 2011, Willow Garage, Inc.
-# # All rights reserved.
-# #
-# # Software License Agreement (BSD License 2.0)
-# #
-# # Redistribution and use in source and binary forms, with or without
-# # modification, are permitted provided that the following conditions
-# # are met:
-# #
-# #  * Redistributions of source code must retain the above copyright
-# #    notice, this list of conditions and the following disclaimer.
-# #  * Redistributions in binary form must reproduce the above
-# #    copyright notice, this list of conditions and the following
-# #    disclaimer in the documentation and/or other materials provided
-# #    with the distribution.
-# #  * Neither the name of {copyright_holder} nor the names of its
-# #    contributors may be used to endorse or promote products derived
-# #    from this software without specific prior written permission.
-# #
-# # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# # "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# # LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-# # FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
-# # COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-# # INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-# # BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-# # LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-# # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-# # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
-# # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-# # POSSIBILITY OF SUCH DAMAGE.
-# #
-# # Author: Darby Lim
-
 import os
 import select
 import sys
@@ -62,45 +26,48 @@ class MinimalSubscriber(Node):
             'scan',
             self.listener_callback,
             10)
-        self.subscription  # prevent unused variable warning
+        self.subscription
         self.pub = self.create_publisher(Twist, 'cmd_vel', qos)
+        self.not_moving_since = True
 
     def listener_callback(self, msg):
-        # self.get_logger().info("ranges")
-        target = []
-        x_list = []
-        y_list = []
         borne_max = 2
         borne_min = 0.5
-        laser_range = []
         ouverture = 20
-        for t in range(ouverture):
-            laser_range.append(msg._ranges[ouverture - t])
-        for t in range(ouverture):
-            laser_range.append(msg._ranges[-t])
-        
-        angle = -ouverture
-        x_centre = (borne_max + borne_min) /2
+        laser_range = msg._ranges[-ouverture:] + msg._ranges[:ouverture]
+        x_centre = (borne_max + borne_min) / 2
         y_centre = 0.0
-        for data in laser_range:
-            if data > borne_min and data < borne_max:
-                x = data * math.cos(math.radians(angle))
-                y = data * math.sin(math.radians(angle))
-                target.append([x, y])
-                x_list.append(x)
-                y_list.append(y)
-                # print(data)
-            angle += 1
-        if x_list != [] and y_list != []:
-            avg = [sum(x_list) / len(x_list), sum(y_list) / len(y_list)]
-            print(avg)
-        else: 
-            avg = [x_centre, y_centre]
+        target = [
+            (
+                data * math.cos(math.radians(angle)),
+                data * math.sin(math.radians(angle))
+            )
+            for angle, data in enumerate(laser_range, start=-ouverture)
+            if borne_min < data < borne_max
+        ]
+        if target:
+            avg_x = sum(x for x, _ in target) / len(target)
+            avg_y = sum(y for _, y in target) / len(target)
+        else:
+            avg_x, avg_y = x_centre, y_centre
 
-        delta_x = avg[0] - x_centre
-        delta_y = y_centre - avg[1]
-
+        delta_x = avg_x - x_centre
+        delta_y = avg_y - y_centre
         self.move(delta_x, delta_y)
+        if delta_x > 0.05 or delta_x < -0.05  or delta_y > 0.05 or delta_y < -0.05 :
+            print('moving')
+            self.not_moving_since = True
+            
+        else:
+            print('not moving')
+            if self.not_moving_since is True    :
+                self.not_moving_since = time.time()
+            if type(self.not_moving_since) is float:
+                if time.time() - self.not_moving_since > 4:
+                    print("finit !!!!!!!!!!!!")
+                    rclpy.shutdown()
+                    # passer a autre chose
+
 
     def move(self, delta_x, delta_y):
         twist = Twist()
@@ -109,8 +76,6 @@ class MinimalSubscriber(Node):
         twist.linear.x = delta_x * k_lin
         twist.linear.y = 0.0
         twist.linear.z = 0.0
-
-
         twist.angular.x = 0.0
         twist.angular.y = 0.0
         twist.angular.z = delta_y *k_ang
@@ -124,9 +89,6 @@ def main(args=None):
 
     rclpy.spin(minimal_subscriber)
 
-    # Destroy the node explicitly
-    # (optional - otherwise it will be done automatically
-    # when the garbage collector destroys the node object)
     minimal_subscriber.destroy_node()
     rclpy.shutdown()
 
